@@ -83,12 +83,12 @@ const Contact = () => {
 
       console.log('Template params:', templateParams);
       console.log('Using service ID:', 'service_ffqc72k');
-      console.log('Using template ID:', 'template_ffqc72k');
+      console.log('Using template ID:', 'template_40hog2m');
       console.log('Using public key:', '2PKrQpMjwAmcNyUx3');
 
       const result = await emailjs.send(
         'service_ffqc72k',
-        'template_ffqc72k',
+        'template_40hog2m',
         templateParams,
         '2PKrQpMjwAmcNyUx3'
       );
