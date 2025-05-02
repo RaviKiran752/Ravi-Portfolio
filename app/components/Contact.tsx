@@ -106,9 +106,17 @@ const Contact = () => {
       setTimeout(() => {
         setSubmitSuccess(false);
       }, 3000);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error sending email:', error);
-      setSubmitError('Failed to send message. Please try again later.');
+      let errorMessage = 'Failed to send message. Please try again later.';
+      
+      if (error.text) {
+        errorMessage = `Error: ${error.text}`;
+      } else if (error.message) {
+        errorMessage = `Error: ${error.message}`;
+      }
+      
+      setSubmitError(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
