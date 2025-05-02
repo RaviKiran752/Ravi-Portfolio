@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
@@ -11,6 +11,12 @@ const Contact = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.1 });
   
+  useEffect(() => {
+    // Initialize EmailJS
+    emailjs.init('2PKrQpMjwAmcNyUx3');
+    console.log('EmailJS initialized');
+  }, []);
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -66,6 +72,7 @@ const Contact = () => {
     setSubmitError('');
     
     try {
+      console.log('Starting email submission...');
       const templateParams = {
         from_name: formData.name,
         from_email: formData.email,
@@ -74,13 +81,19 @@ const Contact = () => {
         to_name: 'Ravi Kiran',
       };
 
-      await emailjs.send(
-        'service_ffqc72k', // Your EmailJS service ID
-        'template_ffqc72k', // Your EmailJS template ID
+      console.log('Template params:', templateParams);
+      console.log('Using service ID:', 'service_ffqc72k');
+      console.log('Using template ID:', 'template_ffqc72k');
+      console.log('Using public key:', '2PKrQpMjwAmcNyUx3');
+
+      const result = await emailjs.send(
+        'service_ffqc72k',
+        'template_ffqc72k',
         templateParams,
-        '2PKrQpMjwAmcNyUx3' // Your EmailJS public key
+        '2PKrQpMjwAmcNyUx3'
       );
 
+      console.log('Email sent successfully:', result);
       setSubmitSuccess(true);
       setFormData({
         name: '',
