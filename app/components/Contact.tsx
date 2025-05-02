@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
+import emailjs from '@emailjs/browser';
 import SectionHeader from './SectionHeader';
 
 const Contact = () => {
@@ -18,6 +19,7 @@ const Contact = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -51,24 +53,35 @@ const Contact = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Validate form
     if (!formData.name || !formData.email || !formData.subject || !formData.message) {
-      alert('Please fill in all fields');
+      setSubmitError('Please fill in all fields');
       return;
     }
     
     setIsSubmitting(true);
+    setSubmitError('');
     
-    // Simulate form submission
-    setTimeout(() => {
-      console.log('Form submitted:', formData);
-      setIsSubmitting(false);
+    try {
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        subject: formData.subject,
+        message: formData.message,
+        to_name: 'Ravi Kiran',
+      };
+
+      await emailjs.send(
+        'service_ffqc72k', // Your EmailJS service ID
+        'template_ffqc72k', // Your EmailJS template ID
+        templateParams,
+        '2PKrQpMjwAmcNyUx3' // Your EmailJS public key
+      );
+
       setSubmitSuccess(true);
-      
-      // Reset form
       setFormData({
         name: '',
         email: '',
@@ -80,7 +93,12 @@ const Contact = () => {
       setTimeout(() => {
         setSubmitSuccess(false);
       }, 3000);
-    }, 1500);
+    } catch (error) {
+      console.error('Error sending email:', error);
+      setSubmitError('Failed to send message. Please try again later.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
@@ -177,6 +195,26 @@ const Contact = () => {
             className="contact-form"
             variants={itemVariants}
           >
+            {submitError && (
+              <motion.div 
+                className="error-message"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                {submitError}
+              </motion.div>
+            )}
+            
+            {submitSuccess && (
+              <motion.div 
+                className="success-message"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                Message sent successfully!
+              </motion.div>
+            )}
+
             <motion.form 
               onSubmit={handleSubmit}
               variants={containerVariants}
@@ -250,25 +288,6 @@ const Contact = () => {
               >
                 {isSubmitting ? 'Sending...' : 'Send Message'}
               </motion.button>
-              
-              {submitSuccess && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.3 }}
-                  style={{ 
-                    marginTop: '20px',
-                    padding: '10px', 
-                    background: '#e8f5e9', 
-                    color: '#388e3c',
-                    borderRadius: '5px',
-                    textAlign: 'center'
-                  }}
-                >
-                  Thank you for your message! I will get back to you soon.
-                </motion.div>
-              )}
             </motion.form>
           </motion.div>
         </motion.div>
