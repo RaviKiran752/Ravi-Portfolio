@@ -26,7 +26,7 @@ const Blogs = () => {
       title: "What Really Happens When You Type a URL in Your Browser?",
       excerpt: "When you type a URL like https://example.com into your browser and hit Enter, it might feel like magic — a web page appears almost instantly...",
       date: "April 11, 2024",
-      link: "https://medium.com/@ravi742t7p/what-really-happens-when-you-type-a-url-in-your-browser",
+      link: "https://medium.com/@ravi742t7p/what-really-happens-when-you-type-a-url-in-your-browser-c0990cbd17e5",
       image: "/images/blog_photos/blog-image-1.png",
       reactions: 5
     },
@@ -34,7 +34,7 @@ const Blogs = () => {
       title: "Decentralized AI (DAI): The Next Evolution of Intelligence",
       excerpt: "Imagine a world where artificial intelligence doesn't live inside the walled gardens of tech giants — but instead, exists freely on...",
       date: "April 11, 2024",
-      link: "https://medium.com/@ravi742t7p/decentralized-ai-dai-the-next-evolution-of-intelligence",
+      link: "https://medium.com/@ravi742t7p/decentralized-ai-dai-the-next-evolution-of-intelligence-b961aeb25e0b",
       image: "/images/blog_photos/blog-image-2.png",
       reactions: 32,
       comments: 1
@@ -43,7 +43,7 @@ const Blogs = () => {
       title: "Jokes About Cat World Domination",
       excerpt: "Cat World Domination Jokes",
       date: "April 10, 2024",
-      link: "https://medium.com/@ravi742t7p/jokes-about-cat-world-domination",
+      link: "https://medium.com/@ravi742t7p/jokes-about-cat-world-domination-43f7a9325c82",
       image: "/images/blog_photos/blog-image-3.png"
     }
   ];
